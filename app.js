@@ -1,5 +1,6 @@
 var createError = require('http-errors');
 var express = require('express');
+var paginate = require('express-paginate');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
@@ -9,6 +10,7 @@ var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 var catalogRouter = require('./routes/catalog');
 var authRouter = require('./routes/auth');
+var search = require('./routes/search');
 
 //Set up mongoose connection
 var mongoose = require('mongoose');
@@ -30,10 +32,14 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 // app.use(checkAuthorization);
+// keep this before all routes that will use pagination
+app.use(paginate.middleware(10, 5));
+
 app.use('/', indexRouter);
 app.use('/users', checkAuthorization, usersRouter);
 app.use('/catalog', checkAuthorization, catalogRouter);
 app.use('/auth', authRouter);
+app.use('/', checkAuthorization, search);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

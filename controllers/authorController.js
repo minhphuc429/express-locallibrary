@@ -6,13 +6,32 @@ const { sanitizeBody } = require('express-validator/filter');
 
 // Display list of all Authors.
 exports.author_list = function(req, res) {
+    var perPage = 2
+    var page = req.params.page || 1
+
     Author.find()
     .sort([['family_name', 'ascending']])
-    .exec(function (err, list_authors) {
-      if (err) { return next(err); }
-      //Successful, so render
-      res.render('author_list', { title: 'Author List', author_list: list_authors });
-    });
+    .skip((perPage * page) - perPage)
+    .limit(perPage)
+    .exec(function(err, authors) {
+        Author.count().exec(function(err, count) {
+            if (err) return next(err)
+            res.render('author_list', {
+                title: 'Author List',
+                author_list: authors,
+                current: page,
+                pages: Math.ceil(count / perPage)
+            })
+        })
+    })
+
+    // Author.find()
+    // .sort([['family_name', 'ascending']])
+    // .exec(function (err, list_authors) {
+    //   if (err) { return next(err); }
+    //   //Successful, so render
+    //   res.render('author_list', { title: 'Author List', author_list: list_authors });
+    // });
 };
 
 exports.author_detail = function(req, res) {

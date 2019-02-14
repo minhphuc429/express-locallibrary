@@ -25,7 +25,11 @@ var BookSchema = new Schema({
     }]
 })
 
-BookSchema.virtual('url').get(function(){
+BookSchema.index({
+    title: 'text'
+});
+
+BookSchema.virtual('url').get(function () {
     return '/catalog/book/' + this._id;
 });
 

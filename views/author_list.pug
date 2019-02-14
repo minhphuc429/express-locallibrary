@@ -6,8 +6,26 @@ block content
   ul
     each author in author_list
       li 
-        a(href=author.url) #{author.name} 
+        a(href=author.url) #{author.name}
         |  (#{author.date_of_birth_formatted} - #{author.date_of_death_formatted})
 
     else
       li There are no authors.
+
+  if pages > 0
+    ul(class="pagination text-center")
+      if current == 1
+        li(class=disable)
+          a(class="btn btn-default") First
+      else
+        li
+          a(href='/catalog/authors/1' class="btn btn-default") First
+
+      
+
+      if current == pages
+        li(class="disable")
+          a(class="") Last
+      else
+        li(class="")
+          a(class="" href="/catalog/authors/" + pages) Last
