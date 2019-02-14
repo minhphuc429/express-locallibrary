@@ -1,3 +1,4 @@
+require('dotenv').config()
 var createError = require('http-errors');
 var express = require('express');
 var paginate = require('express-paginate');
@@ -14,7 +15,8 @@ var search = require('./routes/search');
 
 //Set up mongoose connection
 var mongoose = require('mongoose');
-var mongoDB = 'mongodb://localhost:27017/express-locallibrary';
+// var mongoDB = 'mongodb://localhost:27017/express-locallibrary';
+var mongoDB = process.env.DB_URL;
 mongoose.connect(mongoDB, { useCreateIndex: true, useNewUrlParser: true });
 mongoose.Promise = global.Promise;
 var db = mongoose.connection;

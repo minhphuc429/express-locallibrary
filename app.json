@@ -1,0 +1,11 @@
+{
+    "name": "express-locallibrary",
+    "description": "A barebones Node.js app using Express 4",
+    "repository": "https://github.com/minhphuc429/express-locallibrary",
+    "logo": "https://rawgit.com/heroku/node-js-sample/master/public/node.svg",
+    "keywords": [
+        "node",
+        "express",
+        "static"
+    ]
+}

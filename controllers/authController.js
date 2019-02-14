@@ -11,6 +11,11 @@ var User = require('../models/user');
 const secret = 'secret';
 const JWT_EXPIRATION_MS = 60000;
 
+exports.logout = (req, res) => {
+    res.clearCookie('jwt');
+    res.redirect('/auth/login');
+}
+
 exports.register_get = function (req, res) {
     // 1. See if there is a token on the request...if not, reject immediately
     //

@@ -4,11 +4,32 @@ html(lang='en')
     title= title
     meta(charset='utf-8')
     meta(name='viewport', content='width=device-width, initial-scale=1')
+    <meta name="og:image" content="https://expressjs.com/images/express-facebook-share.png">
+    <link rel="icon" type="image/png" href="/images/favicon.png" />
     link(rel='stylesheet', href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css')
     script(src='https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js')
     script(src='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js')
     link(rel='stylesheet', href='/stylesheets/style.css')
   body
+    .navbar.navbar-default(role='navigation')
+      .container-fluid
+        .navbar-header
+          button.navbar-toggle(type='button', data-toggle='collapse', data-target='.navbar-collapse')
+            span.sr-only Toggle navigation
+            span.icon-bar
+            span.icon-bar
+            span.icon-bar
+          a.navbar-brand(href='#') Express
+        .navbar-collapse.collapse          
+          ul.nav.navbar-nav.navbar-right
+            li
+              a(href='/auth/login') Login
+            li
+              a(href='/auth/register') Register
+            li
+              form(action="/auth/logout", method="post")
+                button(type="submit" class="btn btn-default") Logout
+              
     div(class='container-fluid')
       div(class='row')
         div(class='col-sm-2')
