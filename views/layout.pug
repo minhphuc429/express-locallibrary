@@ -28,9 +28,9 @@ html(lang='en')
             li
               a(href='/auth/register') Register
             li
-              form(action="/auth/logout", method="post")
-                button(type="submit" class="btn btn-default") Logout
-              
+              <a href="#" onclick="event.preventDefault(); document.getElementById('form-logout').submit();"> Logout </a>
+            form(action="/auth/logout", method="post" id="form-logout")
+            
     div(class='container-fluid')
       div(class='row')
         div(class='col-sm-2')
