@@ -7,7 +7,8 @@ module.exports = function(req, res, next) {
     const userJWT = req.cookies.jwt
     if (!userJWT) {
         // res.send(401, 'Invalid or missing authorization token')
-        res.render('login', { title: 'Login' })
+        // res.render('login', { title: 'Login' })
+        res.redirect('/auth/login')
     }
   
     //2. There's a token; see if it is a valid one and retrieve the payload
@@ -19,7 +20,8 @@ module.exports = function(req, res, next) {
             //
             res.clearCookie('jwt')
             // res.send(401, 'Invalid or missing authorization token')
-            res.render('login', { title: 'Login' })
+            // res.render('login', { title: 'Login' })
+            res.redirect('/auth/login')
         }
         else {
   
