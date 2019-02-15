@@ -1,10 +1,16 @@
 var mongoose = require('mongoose');
+var uniqueValidator = require('mongoose-unique-validator');
 var Schema = mongoose.Schema;
 
 var BookSchema = new Schema({
     title: {
         type: String,
         required: true
+    },
+    slug: {
+        type: String,
+        required: true,
+        unique: true
     },
     author: {
         type: Schema.Types.ObjectId,
@@ -25,12 +31,15 @@ var BookSchema = new Schema({
     }]
 })
 
+// Apply the uniqueValidator plugin to userSchema.
+BookSchema.plugin(uniqueValidator);
+
 BookSchema.index({
     title: 'text'
 });
 
 BookSchema.virtual('url').get(function () {
-    return '/catalog/book/' + this._id;
+    return '/catalog/book/' + this.slug;
 });
 
 module.exports = mongoose.model('Book', BookSchema);

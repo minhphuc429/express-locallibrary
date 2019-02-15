@@ -8,6 +8,9 @@ block content
       label(for='title') Title:
       input#title.form-control(type='text', placeholder='Name of book' name='title' required='true' value=(undefined===book ? '' : book.title) )
     div.form-group
+      label(for='slug') Slug:
+      input#slug.form-control(type='text', placeholder='Slug' name='slug' required='true' value=(undefined===book ? '' : book.slug) )
+    div.form-group
       label(for='author') Author:
       select#author.form-control(type='select' placeholder='Select author' name='author' required='true' )
         for author in authors

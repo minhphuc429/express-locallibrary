@@ -34,7 +34,7 @@ exports.index = function (req, res) {
 exports.book_list = async function (req, res, next) {
     try {
         const [results, itemCount] = await Promise.all([
-            Book.find({}, 'title author').populate('author').limit(req.query.limit).skip(req.skip).lean().exec(),
+            Book.find({}, 'title slug author').populate('author').limit(req.query.limit).skip(req.skip).lean().exec(),
             Book.count({})
         ])
     
@@ -75,7 +75,7 @@ exports.book_list = async function (req, res, next) {
 exports.book_detail = function (req, res, next) {
     async.parallel({
         book: function (callback) {
-            Book.findById(req.params.id)
+            Book.findOne({slug: req.params.slug})
                 .populate('author')
                 .populate('genre')
                 .exec(callback);
@@ -126,6 +126,7 @@ exports.book_create_post = [
 
     // Validate fields.
     body('title', 'Title must not be empty.').isLength({ min: 1 }).trim(),
+    body('slug', 'Slug must not be empty.').isLength({ min: 1 }).trim(),
     body('author', 'Author must not be empty.').isLength({ min: 1 }).trim(),
     body('summary', 'Summary must not be empty.').isLength({ min: 1 }).trim(),
     body('isbn', 'ISBN must not be empty').isLength({ min: 1 }).trim(),
@@ -142,6 +143,7 @@ exports.book_create_post = [
         // Create a Book object with escaped and trimmed data.
         var book = new Book({
             title: req.body.title,
+            slug: req.body.slug,
             author: req.body.author,
             summary: req.body.summary,
             isbn: req.body.isbn,

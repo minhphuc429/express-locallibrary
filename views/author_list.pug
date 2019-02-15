@@ -12,20 +12,20 @@ block content
     else
       li There are no authors.
 
-  if pages > 0
-    ul(class="pagination text-center")
-      if current == 1
-        li(class=disable)
-          a(class="btn btn-default") First
-      else
-        li
-          a(href='/catalog/authors/1' class="btn btn-default") First
+  //- if pages > 0
+  //-   ul(class="pagination text-center")
+  //-     if current == 1
+  //-       li(class=disable)
+  //-         a(class="btn btn-default") First
+  //-     else
+  //-       li
+  //-         a(href='/catalog/authors/1' class="btn btn-default") First
 
       
 
-      if current == pages
-        li(class="disable")
-          a(class="") Last
-      else
-        li(class="")
-          a(class="" href="/catalog/authors/" + pages) Last
+  //-     if current == pages
+  //-       li(class="disable")
+  //-         a(class="") Last
+  //-     else
+  //-       li(class="")
+  //-         a(class="" href="/catalog/authors/" + pages) Last

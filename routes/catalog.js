@@ -31,7 +31,7 @@ router.get('/book/:id/update', book_controller.book_update_get);
 router.post('/book/:id/update', book_controller.book_update_post);
 
 // GET request for one Book.
-router.get('/book/:id', book_controller.book_detail);
+router.get('/book/:slug', book_controller.book_detail);
 
 // GET request for list of all Book items.
 router.get('/books', book_controller.book_list);
@@ -83,7 +83,7 @@ router.get('/genre/:id/update', genre_controller.genre_update_get);
 router.post('/genre/:id/update', genre_controller.genre_update_post);
 
 // GET request for one Genre.
-router.get('/genre/:id', genre_controller.genre_detail);
+router.get('/genre/:slug', genre_controller.genre_detail);
 
 // GET request for list of all Genre.
 router.get('/genres', genre_controller.genre_list);

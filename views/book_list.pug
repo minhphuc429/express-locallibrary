@@ -10,7 +10,7 @@ block content
   ul
     each book in book_list
       li 
-        a(href='/catalog/book/' + book._id) #{book.title} 
+        a(href='/catalog/book/' + book.slug) #{book.title} 
         |  (#{book.author.name})
 
     else

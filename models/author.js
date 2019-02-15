@@ -1,4 +1,5 @@
 var mongoose = require('mongoose');
+var uniqueValidator = require('mongoose-unique-validator');
 var moment = require('moment');
 var Schema = mongoose.Schema;
 
@@ -13,6 +14,11 @@ var AuthorSchema = new Schema({
         required: true,
         max: 100
     },
+    slug: {
+        type: String,
+        required: true,
+        unique: true
+    },
     date_of_birth: {
         type: Date
     },
@@ -20,6 +26,9 @@ var AuthorSchema = new Schema({
         type: Date
     },
 });
+
+// Apply the uniqueValidator plugin to userSchema.
+AuthorSchema.plugin(uniqueValidator);
 
 AuthorSchema.virtual('name').get(function(){
     return `${this.family_name} ${this.first_name}`;
@@ -38,7 +47,7 @@ AuthorSchema.virtual('lifespan').get(function(){
 });
 
 AuthorSchema.virtual('url').get(function(){
-    return '/catalog/author/' + this._id;
+    return '/catalog/author/' + this.slug;
 });
 
 AuthorSchema.virtual('date_of_birth_formatted').get(function(){

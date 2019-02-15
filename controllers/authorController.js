@@ -6,32 +6,32 @@ const { sanitizeBody } = require('express-validator/filter');
 
 // Display list of all Authors.
 exports.author_list = function(req, res) {
-    var perPage = 2
-    var page = req.params.page || 1
-
-    Author.find()
-    .sort([['family_name', 'ascending']])
-    .skip((perPage * page) - perPage)
-    .limit(perPage)
-    .exec(function(err, authors) {
-        Author.count().exec(function(err, count) {
-            if (err) return next(err)
-            res.render('author_list', {
-                title: 'Author List',
-                author_list: authors,
-                current: page,
-                pages: Math.ceil(count / perPage)
-            })
-        })
-    })
+    // var perPage = 2
+    // var page = req.params.page || 1
 
     // Author.find()
     // .sort([['family_name', 'ascending']])
-    // .exec(function (err, list_authors) {
-    //   if (err) { return next(err); }
-    //   //Successful, so render
-    //   res.render('author_list', { title: 'Author List', author_list: list_authors });
-    // });
+    // .skip((perPage * page) - perPage)
+    // .limit(perPage)
+    // .exec(function(err, authors) {
+    //     Author.count().exec(function(err, count) {
+    //         if (err) return next(err)
+    //         res.render('author_list', {
+    //             title: 'Author List',
+    //             author_list: authors,
+    //             current: page,
+    //             pages: Math.ceil(count / perPage)
+    //         })
+    //     })
+    // })
+
+    Author.find()
+    .sort([['family_name', 'ascending']])
+    .exec(function (err, list_authors) {
+      if (err) { return next(err); }
+      //Successful, so render
+      res.render('author_list', { title: 'Author List', author_list: list_authors });
+    });
 };
 
 exports.author_detail = function(req, res) {
@@ -66,6 +66,7 @@ exports.author_create_post = [
         .isAlphanumeric().withMessage('First name has non-alphanumeric characters.'),
     body('family_name').isLength({ min: 1 }).trim().withMessage('Family name must be specified.')
         .isAlphanumeric().withMessage('Family name has non-alphanumeric characters.'),
+    body('slug', 'Slug must not be empty.').isLength({ min: 1 }).trim(),
     body('date_of_birth', 'Invalid date of birth').optional({ checkFalsy: true }).isISO8601(),
     body('date_of_death', 'Invalid date of death').optional({ checkFalsy: true }).isISO8601(),
 
@@ -94,6 +95,7 @@ exports.author_create_post = [
                 {
                     first_name: req.body.first_name,
                     family_name: req.body.family_name,
+                    slug: req.body.slug,
                     date_of_birth: req.body.date_of_birth,
                     date_of_death: req.body.date_of_death
                 });
